@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- 在 head 部分添加 --> 
+  <script src="marked.min.js"></script>
+  <title>AI助手</title>
+  <style>
+    /* 基础样式 - 全屏设置 */
+    body {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      color: #333;
+      overflow: hidden;
+      background-color: #f5f5f5;
+    }
+    
+    #bgVideo {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      z-index: -1;
+    }
+    
+    /* 顶部栏 */
+    .top-bar {
+      height: 60px;
+      background-color: rgba(255, 255, 255, 0.9);
+      padding: 0 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 10;
+    }
+    
+    /* 对话容器 - 全屏设置 */
+    .chat-container {
+      position: fixed;
+      top: 60px;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      overflow-y: auto;
+      padding: 20px;
+      background-color: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(10px);
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    
+    /* 消息气泡 - 固定宽度 */
+    .message {
+      margin-bottom: 15px;
+      max-width: 92%;
+      width: fit-content;
+      min-width: 120px;
+    }
+    
+    /* AI消息 */
+    .ai-message {
+      align-self: flex-start;
+      margin-right: auto;
+    }
+    
+    /* 用户消息 */
+    .user-message {
+      align-self: flex-end;
+      margin-left: auto;
+    }
+    
+    /* 消息名称样式 */
+    .message-name {
+      font-size: 12px;
+      color: #666;
+      margin-bottom: 4px;
+      padding-left: 10px;
+    }
+    
+    .ai-name {
+      font-family: 'AI_Font', sans-serif;
+    }
+    
+    /* 消息气泡样式 */
+    .message-bubble {
+      padding: 10px 15px;
+      border-radius: 18px;
+      line-height: 1.4;
+      word-break: break-word;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    }
+    
+    .ai-message .message-bubble {
+      background-color: #f1f1f1;
+      border-top-left-radius: 4px;
+    }
+    
+    .user-message .message-bubble {
+      background-color: #165DFF;
+      color: white;
+      border-top-right-radius: 4px;
+    }
+    
+    /* 隐藏类 */
+    .hidden {
+      display: none;
+    }
+    
+    /* 添加AI字体 */
+    @font-face {
+      font-family: 'AI_Font';
+      src: url('assets/fonts/AI_Font.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    /* 开关样式 */
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 60px;
+      height: 34px;
+    }
+
+    .switch input { 
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      -webkit-transition: .4s;
+      transition: .4s;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 26px;
+      width: 26px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      -webkit-transition: .4s;
+      transition: .4s;
+    }
+
+    input:checked + .slider {
+      background-color: #2196F3;
+    }
+
+    input:focus + .slider {
+      box-shadow: 0 0 1px #2196F3;
+    }
+
+    input:checked + .slider:before {
+      -webkit-transform: translateX(26px);
+      -ms-transform: translateX(26px);
+      transform: translateX(26px);
+    }
+
+    /* Rounded sliders */
+    .slider.round {
+      border-radius: 34px;
+    }
+
+    .slider.round:before {
+      border-radius: 50%;
+    }
+  </style>
+</head>
+<body>
+  <video autoplay muted loop id="bgVideo">
+    <source src="assets/background-video.mp4" type="video/mp4">
+  </video>
+  
+  <!-- 对话界面 -->
+  <div id="chatInterface">
+    <div class="top-bar">
+      <div style="font-size: 18px; font-weight: bold;">Artificial Intelligence</div>
+      <div style="display: flex; align-items: center;">
+        <label class="switch">
+          <input type="checkbox" id="toggleSwitch" checked>
+          <span class="slider round"></span>
+        </label>
+        <button id="logoutBtn" style="background: none; border: none; cursor: pointer; color: #165DFF;">退出</button>
+      </div>
+    </div>
+    <div class="chat-container" id="messageContainer">
+      <!-- 消息将在这里动态添加 -->
+    </div>
+  </div>
+
+  <script src="sidebar.js"></script>
+</body>
+</html>

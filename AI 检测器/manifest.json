@@ -1,0 +1,34 @@
+{
+    "manifest_version": 3,
+    "name": "幻觉检测器",
+    "version": "1.01.0",
+    "description": "捕获DeepSeek网页版的AI回复内容",
+    "permissions": [
+        "activeTab",
+        "scripting",
+        "storage",
+        "sidePanel"
+    ],
+    "action": {
+        "default_title": "幻觉检测器"
+    },
+    "side_panel": {
+        "default_path": "sidebar.html"
+    },
+    "content_security_policy": {
+        "extension_pages": "script-src 'self'; object-src 'self'"
+    },
+    "background": {
+        "service_worker": "background.js"
+    },
+    "content_scripts": [
+        {
+            "matches": ["https://chat.deepseek.com/*"],
+            "js": ["content.js"]
+        }
+    ],
+    "web_accessible_resources": [{
+        "resources": ["marked.min.js"],
+        "matches": ["<all_urls>"]
+    }]
+}
