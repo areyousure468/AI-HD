@@ -3,7 +3,7 @@ DeepSeek的发布使我们可以免费使用到高级AI，使得AI普及率进�
 
 而我们的AI HD就是为此而生，虽然这个目前构造简单，但是我们试验了几乎市面上的所有的AI，最终锁定了百度出的这款，其优点就好像是专门为了检测幻觉而生一般，相应速度快、费用低、幻觉率极低，特别是幻觉率问题，几乎比DeepSeek、qwen、豆包、chatgpt、claude等主流AI都要低，但是随之而来的劣势就是其推理等能力差，但是这并不影响他能成为一个优秀的检测幻觉模型。
 ### 项目演示
-<video width="640" height="360" controls>
+<video width="640" height="360" controls autoplay muted>
   <source src="6月5日.mp4" type="video/mp4">
   你的浏览器不支持 video 标签，请点击[这里查看视频](你的视频路径.mp4)。
 </video>
